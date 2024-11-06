@@ -21,15 +21,22 @@
 <body>
   <!-- Flutter app loading section -->
   <div id="app-container">
-    <!-- Feedback Button added as a non-intrusive overlay -->
-    <div style="position: absolute; top: 20px; right: 20px; z-index: 1000;">
-      <a href="feedback.html" target="_blank">
-        <button style="padding: 10px 15px; font-size: 16px;">Give Feedback</button>
-      </a>
-    </div>
-
-    <!-- Flutter app script -->
+    <!-- Your Flutter app content goes here -->
     <script src="flutter_bootstrap.js" async></script>
   </div>
+
+  <!-- Prompt for feedback before page unload -->
+  <script>
+    window.addEventListener('beforeunload', function (e) {
+      // Show a confirmation dialog before the user leaves
+      e.preventDefault();
+      e.returnValue = '';  // Some browsers require returnValue to be set
+    });
+
+    window.addEventListener('unload', function () {
+      // Open the feedback form in a new tab when the user leaves
+      window.open('https://bit.ly/app-triplan-form', '_blank');
+    });
+  </script>
 </body>
 </html>
