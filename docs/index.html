@@ -1,21 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
-  <base href="/">
-
+  <base href="/app-triplan/">
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="A new Flutter project.">
@@ -33,6 +19,17 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
-  <script src="flutter_bootstrap.js" async></script>
+  <!-- Flutter app loading section -->
+  <div id="app-container">
+    <!-- Feedback Button added as a non-intrusive overlay -->
+    <div style="position: absolute; top: 20px; right: 20px; z-index: 1000;">
+      <a href="feedback.html" target="_blank">
+        <button style="padding: 10px 15px; font-size: 16px;">Give Feedback</button>
+      </a>
+    </div>
+
+    <!-- Flutter app script -->
+    <script src="flutter_bootstrap.js" async></script>
+  </div>
 </body>
 </html>
