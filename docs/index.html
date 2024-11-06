@@ -17,6 +17,43 @@
 
   <title>triplan</title>
   <link rel="manifest" href="manifest.json">
+  <style>
+    /* Modal styling */
+    .feedback-modal {
+      display: none; /* Hidden by default */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .feedback-content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      width: 300px;
+    }
+    .feedback-button, .close-button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+    }
+    .feedback-button {
+      background-color: #007BFF;
+      color: white;
+    }
+    .close-button {
+      background-color: #ccc;
+    }
+  </style>
 </head>
 <body>
   <!-- Flutter app loading section -->
@@ -25,18 +62,25 @@
     <script src="flutter_bootstrap.js" async></script>
   </div>
 
-  <!-- Prompt for feedback before page unload -->
-  <script>
-    window.addEventListener('beforeunload', function (e) {
-      // Show a confirmation dialog before the user leaves
-      e.preventDefault();
-      e.returnValue = '';  // Some browsers require returnValue to be set
-    });
+  <!-- Feedback Modal -->
+  <div id="feedback-modal" class="feedback-modal">
+    <div class="feedback-content">
+      <p>We'd love to hear your feedback!</p>
+      <button onclick="window.open('https://bit.ly/app-triplan-form', '_blank')" class="feedback-button">Give Feedback</button>
+      <button onclick="closeFeedbackModal()" class="close-button">Close</button>
+    </div>
+  </div>
 
-    window.addEventListener('unload', function () {
-      // Open the feedback form in a new tab when the user leaves
-      window.open('https://bit.ly/app-triplan-form', '_blank');
-    });
+  <script>
+    // Show feedback modal after a delay of 30 seconds (30000 ms)
+    setTimeout(function () {
+      document.getElementById("feedback-modal").style.display = "flex";
+    }, 30000);
+
+    // Function to close the feedback modal
+    function closeFeedbackModal() {
+      document.getElementById("feedback-modal").style.display = "none";
+    }
   </script>
 </body>
 </html>
