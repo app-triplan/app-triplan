@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core'
+    'core',
+    'rest_framework',
+    'itineraries'
 ]
 
 MIDDLEWARE = [
@@ -76,8 +78,12 @@ WSGI_APPLICATION = 'triplan.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'triplan_main',     # Your database name
+        'USER': 'postgres',          # Your PostgreSQL username
+        'PASSWORD': 'shamil',         # Your PostgreSQL password
+        'HOST': 'localhost',         # Typically localhost if running locally
+        'PORT': '5432',              # Default PostgreSQL port
     }
 }
 
