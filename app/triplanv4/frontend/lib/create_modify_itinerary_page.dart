@@ -4,7 +4,7 @@ class CreateModifyItineraryPage extends StatefulWidget {
   final String title;
   final String dates;
 
-  CreateModifyItineraryPage({required this.title, required this.dates});
+  const CreateModifyItineraryPage({super.key, required this.title, required this.dates});
 
   @override
   _CreateModifyItineraryPageState createState() => _CreateModifyItineraryPageState();
@@ -39,9 +39,9 @@ class _CreateModifyItineraryPageState extends State<CreateModifyItineraryPage> {
           children: [
             Text(
               widget.dates,
-              style: TextStyle(fontSize: 18, color: Colors.grey),
+              style: const TextStyle(fontSize: 18, color: Colors.grey),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 showModalBottomSheet(
@@ -53,10 +53,10 @@ class _CreateModifyItineraryPageState extends State<CreateModifyItineraryPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Add New Activity', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                          SizedBox(height: 16),
+                          const Text('Add New Activity', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                          const SizedBox(height: 16),
                           DropdownButtonFormField<String>(
-                            decoration: InputDecoration(labelText: 'Type'),
+                            decoration: const InputDecoration(labelText: 'Type'),
                             value: selectedType,
                             items: types.map((type) {
                               return DropdownMenuItem(
@@ -71,11 +71,11 @@ class _CreateModifyItineraryPageState extends State<CreateModifyItineraryPage> {
                               });
                             },
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           // Show the Sub-Type dropdown only if the selected type is Travel Tickets or Rentals
                           if (selectedType == 'Travel Tickets' || selectedType == 'Rentals')
                             DropdownButtonFormField<String>(
-                              decoration: InputDecoration(labelText: 'Sub-Type'),
+                              decoration: const InputDecoration(labelText: 'Sub-Type'),
                               value: selectedSubType,
                               items: subTypes[selectedType]!.map((subType) {
                                 return DropdownMenuItem(
@@ -89,25 +89,25 @@ class _CreateModifyItineraryPageState extends State<CreateModifyItineraryPage> {
                                 });
                               },
                             ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           TextFormField(
                             controller: nameController,
-                            decoration: InputDecoration(labelText: 'Name'),
+                            decoration: const InputDecoration(labelText: 'Name'),
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           TextFormField(
                             controller: locationController, // Location field
-                            decoration: InputDecoration(labelText: 'Location'),
+                            decoration: const InputDecoration(labelText: 'Location'),
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           TextFormField(
                             controller: costController, // Cost field
-                            decoration: InputDecoration(labelText: 'Cost'),
+                            decoration: const InputDecoration(labelText: 'Cost'),
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           TextFormField(
                             controller: dateController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: 'Date',
                               suffixIcon: Icon(Icons.calendar_today),
                             ),
@@ -126,10 +126,10 @@ class _CreateModifyItineraryPageState extends State<CreateModifyItineraryPage> {
                               }
                             },
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           TextFormField(
                             controller: timeController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: 'Time',
                               suffixIcon: Icon(Icons.access_time),
                             ),
@@ -146,31 +146,31 @@ class _CreateModifyItineraryPageState extends State<CreateModifyItineraryPage> {
                               }
                             },
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           TextFormField(
-                            decoration: InputDecoration(labelText: 'Files (PDF, JPG, JPEG)',
+                            decoration: const InputDecoration(labelText: 'Files (PDF, JPG, JPEG)',
                             suffixIcon: Icon(Icons.attach_file)),
                             readOnly: true,
                             onTap: () {
                               // Implement file picker functionality
                             },
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           TextFormField(
                             controller: notesController,
-                            decoration: InputDecoration(labelText: 'Notes'),
+                            decoration: const InputDecoration(labelText: 'Notes'),
                             maxLines: 3,
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           ElevatedButton(
                             onPressed: () {
                               // Implement save functionality
                               Navigator.pop(context);
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Activity saved successfully!')),
+                                const SnackBar(content: Text('Activity saved successfully!')),
                               );
                             },
-                            child: Text('Save'),
+                            child: const Text('Save'),
                           ),
                         ],
                       ),
@@ -178,7 +178,7 @@ class _CreateModifyItineraryPageState extends State<CreateModifyItineraryPage> {
                   ),
                 );
               },
-              child: Text('Add Activity'),
+              child: const Text('Add Activity'),
             ),
           ],
         ),

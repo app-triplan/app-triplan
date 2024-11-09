@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class UploadDocumentPage extends StatefulWidget {
+  const UploadDocumentPage({super.key});
+
   @override
   _UploadDocumentPageState createState() => _UploadDocumentPageState();
 }
@@ -29,10 +31,10 @@ class _UploadDocumentPageState extends State<UploadDocumentPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Upload Document', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              SizedBox(height: 16),
+              const Text('Upload Document', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 16),
               DropdownButtonFormField<String>(
-                decoration: InputDecoration(labelText: 'Type'),
+                decoration: const InputDecoration(labelText: 'Type'),
                 value: selectedType,
                 items: types.map((type) {
                   return DropdownMenuItem(
@@ -46,9 +48,9 @@ class _UploadDocumentPageState extends State<UploadDocumentPage> {
                   });
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'File (PDF, JPG, JPEG)',
                   suffixIcon: Icon(Icons.attach_file),
                 ),
@@ -57,22 +59,22 @@ class _UploadDocumentPageState extends State<UploadDocumentPage> {
                   // Implement file picker functionality here
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: notesController,
-                decoration: InputDecoration(labelText: 'Notes'),
+                decoration: const InputDecoration(labelText: 'Notes'),
                 maxLines: 3,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   // Implement save functionality
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Document uploaded successfully!')),
+                    const SnackBar(content: Text('Document uploaded successfully!')),
                   );
                 },
-                child: Text('Upload'),
+                child: const Text('Upload'),
               ),
             ],
           ),
@@ -85,9 +87,9 @@ class _UploadDocumentPageState extends State<UploadDocumentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Upload Document'),
+        title: const Text('Upload Document'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Upload Document Page'),
       ),
     );

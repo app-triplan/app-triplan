@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart'; // Make sure you have this package in your pubspec.yaml
 
 class ExpensesScreen extends StatefulWidget {
+  const ExpensesScreen({super.key});
+
   @override
   _ExpensesScreenState createState() => _ExpensesScreenState();
 }
@@ -55,7 +57,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                 });
               },
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // Overview with a budget progress bar
             Card(
               elevation: 4,
@@ -64,10 +66,10 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Total Expenses', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 8),
-                    Text('\$${totalExpenses.toStringAsFixed(2)}', style: TextStyle(fontSize: 24, color: Colors.blue)),
-                    SizedBox(height: 16),
+                    const Text('Total Expenses', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 8),
+                    Text('\$${totalExpenses.toStringAsFixed(2)}', style: const TextStyle(fontSize: 24, color: Colors.blue)),
+                    const SizedBox(height: 16),
                     LinearProgressIndicator(
                       value: (totalExpenses / 1000).clamp(0.0, 1.0),
                       backgroundColor: Colors.grey[300],
@@ -77,7 +79,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // List of expenses with a detailed view on tap
             Expanded(
               child: ListView.builder(
@@ -85,12 +87,12 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                 itemBuilder: (context, index) {
                   final expense = expenses[index];
                   return Card(
-                    margin: EdgeInsets.symmetric(vertical: 8),
+                    margin: const EdgeInsets.symmetric(vertical: 8),
                     child: ListTile(
-                      leading: Icon(Icons.attach_money, color: Colors.green),
-                      title: Text(expense['name'], style: TextStyle(fontWeight: FontWeight.bold)),
+                      leading: const Icon(Icons.attach_money, color: Colors.green),
+                      title: Text(expense['name'], style: const TextStyle(fontWeight: FontWeight.bold)),
                       subtitle: Text('${expense['category']} - ${expense['date']}'),
-                      trailing: Text('\$${expense['amount'].toStringAsFixed(2)}', style: TextStyle(color: Colors.green)),
+                      trailing: Text('\$${expense['amount'].toStringAsFixed(2)}', style: const TextStyle(color: Colors.green)),
                       onTap: () {
                         _showExpenseDetails(context, expense);
                       },
@@ -122,7 +124,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Close'),
+              child: const Text('Close'),
               onPressed: () {
                 Navigator.of(context).pop();
               },

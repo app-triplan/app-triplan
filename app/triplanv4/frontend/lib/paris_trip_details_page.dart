@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ParisTripDetailsPage extends StatefulWidget {
+  const ParisTripDetailsPage({super.key});
+
   @override
   _ParisTripDetailsPageState createState() => _ParisTripDetailsPageState();
 }
@@ -69,7 +71,7 @@ class _ParisTripDetailsPageState extends State<ParisTripDetailsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Paris Trip Details'),
+        title: const Text('Paris Trip Details'),
       ),
       body: Column(
         children: [
@@ -79,7 +81,7 @@ class _ParisTripDetailsPageState extends State<ParisTripDetailsPage> {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text('${(progress * 100).toStringAsFixed(0)}% completed', style: TextStyle(fontSize: 16)),
+            child: Text('${(progress * 100).toStringAsFixed(0)}% completed', style: const TextStyle(fontSize: 16)),
           ),
           Expanded(
             child: ListView.builder(
@@ -95,17 +97,17 @@ class _ParisTripDetailsPageState extends State<ParisTripDetailsPage> {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           dayActivities['date'],
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ),
                       ...dayActivities['activities'].map<Widget>((activity) {
                         return Card(
                           color: activity['completed'] ? Colors.grey : activity['color'],
-                          margin: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                          margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
                           child: ListTile(
                             leading: Icon(activity['icon'], size: 40, color: Colors.white),
-                            title: Text(activity['title'], style: TextStyle(color: Colors.white, fontSize: 18)),
-                            subtitle: Text(activity['time'], style: TextStyle(color: Colors.white70)),
+                            title: Text(activity['title'], style: const TextStyle(color: Colors.white, fontSize: 18)),
+                            subtitle: Text(activity['time'], style: const TextStyle(color: Colors.white70)),
                             trailing: Checkbox(
                               value: activity['completed'],
                               onChanged: (bool? value) {

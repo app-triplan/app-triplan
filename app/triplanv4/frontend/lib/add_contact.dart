@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AddContactPage extends StatefulWidget {
+  const AddContactPage({super.key});
+
   @override
   _AddContactPageState createState() => _AddContactPageState();
 }
@@ -29,23 +31,23 @@ class _AddContactPageState extends State<AddContactPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Add Contact', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              SizedBox(height: 16),
+              const Text('Add Contact', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: nameController,
-                decoration: InputDecoration(labelText: 'Name'),
+                decoration: const InputDecoration(labelText: 'Name'),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: numberController,
-                decoration: InputDecoration(labelText: 'Phone Number'),
+                decoration: const InputDecoration(labelText: 'Phone Number'),
                 keyboardType: TextInputType.phone,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Share Location Automatically', style: TextStyle(fontSize: 16)),
+                  const Text('Share Location Automatically', style: TextStyle(fontSize: 16)),
                   Switch(
                     value: shareLocation,
                     onChanged: (value) {
@@ -56,16 +58,16 @@ class _AddContactPageState extends State<AddContactPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   // Implement save functionality
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Contact added successfully!')),
+                    const SnackBar(content: Text('Contact added successfully!')),
                   );
                 },
-                child: Text('Add Contact'),
+                child: const Text('Add Contact'),
               ),
             ],
           ),
@@ -78,9 +80,9 @@ class _AddContactPageState extends State<AddContactPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Contact'),
+        title: const Text('Add Contact'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Add Contact Page'),
       ),
     );

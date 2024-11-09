@@ -7,33 +7,33 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: const Text('Profile'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CircleAvatar(
+            const CircleAvatar(
               radius: 50,
               backgroundImage: AssetImage('assets/profile.jpg'),
             ),
-            SizedBox(height: 16),
-            Text(
+            const SizedBox(height: 16),
+            const Text(
               'Milan Gabriel',
               style: TextStyle(fontSize: 20),
             ),
-            SizedBox(height: 8),
-            Text(
+            const SizedBox(height: 8),
+            const Text(
               'Member Since: Sep 2024',
               style: TextStyle(fontSize: 16),
             ),
-            SizedBox(height: 16),
-            Text(
+            const SizedBox(height: 16),
+            const Text(
               'Co-Travellers:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Expanded(
               child: ListView(
                 children: [
@@ -44,7 +44,7 @@ class ProfilePage extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -54,10 +54,10 @@ class ProfilePage extends StatelessWidget {
                   ),
                   onPressed: () {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Invite copied to clipboard!')),
+                      const SnackBar(content: Text('Invite copied to clipboard!')),
                     );
                   },
-                  child: Text('Invite'),
+                  child: const Text('Invite'),
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -65,10 +65,10 @@ class ProfilePage extends StatelessWidget {
                   ),
                   onPressed: () {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Logging out...')),
+                      const SnackBar(content: Text('Logging out...')),
                     );
                   },
-                  child: Text('Logout'),
+                  child: const Text('Logout'),
                 ),
               ],
             ),
@@ -80,9 +80,9 @@ class ProfilePage extends StatelessWidget {
 
   Widget _buildCoTravelerTile(BuildContext context, String name, String userSince, int tripCount) {
     return ListTile(
-      title: Text(name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+      title: Text(name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
       subtitle: Text(userSince, style: TextStyle(color: Colors.grey[600])),
-      trailing: Text('Trips: $tripCount', style: TextStyle(fontWeight: FontWeight.bold)),
+      trailing: Text('Trips: $tripCount', style: const TextStyle(fontWeight: FontWeight.bold)),
       onTap: () {
         // Show a dialog or navigate to another screen with user details
         _showUserDetails(context, name, userSince, tripCount);
@@ -99,7 +99,7 @@ class ProfilePage extends StatelessWidget {
           content: Text('$userSince\nTrips taken together: $tripCount'),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child: const Text('OK'),
               onPressed: () {
                 Navigator.of(context).pop();
               },

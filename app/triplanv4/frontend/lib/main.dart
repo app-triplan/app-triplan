@@ -11,7 +11,7 @@ import 'add_contact.dart';
 import 'expenses_page.dart';
 
 void main() {
-  runApp(TriplanApp());
+  runApp(const TriplanApp());
 }
 
 class TriplanApp extends StatelessWidget {
@@ -24,7 +24,7 @@ class TriplanApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }
@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _screens.addAll([
       HomeScreenContent(onNavigateToItinerary: _onNavigateToItinerary),
       ItineraryScreen(showAllTrips: true, initialFilter: _currentFilter),
-      DocumentsScreen(),
+      const DocumentsScreen(),
       ContactsScreen(),
       ExpensesScreen()
     ]);
@@ -120,14 +120,14 @@ Monitor your total expense and budget progress.
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text(_screenTitles[_selectedIndex] + ' - Info'),
+        title: Text('${_screenTitles[_selectedIndex]} - Info'),
         content: Text(infoContent),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('Close'),
+            child: const Text('Close'),
           ),
         ],
       );
@@ -147,12 +147,12 @@ Monitor your total expense and budget progress.
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.info_outline),
+            icon: const Icon(Icons.info_outline),
             onPressed: () => _showInfo(context),
           ),
           if (_selectedIndex == 1)
             IconButton(
-              icon: Icon(Icons.add),
+              icon: const Icon(Icons.add),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -162,7 +162,7 @@ Monitor your total expense and budget progress.
             ),
           if (_selectedIndex == 2)
             IconButton(
-              icon: Icon(Icons.add),
+              icon: const Icon(Icons.add),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -172,7 +172,7 @@ Monitor your total expense and budget progress.
             ),
           if (_selectedIndex == 3)
             IconButton(
-              icon: Icon(Icons.add),
+              icon: const Icon(Icons.add),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -182,7 +182,7 @@ Monitor your total expense and budget progress.
             ),
           if (_selectedIndex == 4)
             IconButton(
-              icon: Icon(Icons.add),
+              icon: const Icon(Icons.add),
               onPressed: () {
                 showModalBottomSheet(
                   context: context,
@@ -192,7 +192,7 @@ Monitor your total expense and budget progress.
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(
+                          const Text(
                             'Add New Expense',
                             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                           ),
@@ -201,7 +201,7 @@ Monitor your total expense and budget progress.
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: Text('Add Expense'),
+                            child: const Text('Add Expense'),
                           ),
                         ],
                       ),
@@ -214,7 +214,7 @@ Monitor your total expense and budget progress.
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ProfilePage()),
+                MaterialPageRoute(builder: (context) => const ProfilePage()),
               );
             },
             child: const Padding(

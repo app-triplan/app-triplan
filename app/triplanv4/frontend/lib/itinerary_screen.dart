@@ -6,7 +6,7 @@ class ItineraryScreen extends StatefulWidget {
   final bool showAllTrips;
   final String initialFilter; // Parameter for initial filter
 
-  ItineraryScreen({super.key, required this.showAllTrips, required this.initialFilter});
+  const ItineraryScreen({super.key, required this.showAllTrips, required this.initialFilter});
 
   @override
   _ItineraryScreenState createState() => _ItineraryScreenState();

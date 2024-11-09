@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CreateNewTripPage extends StatefulWidget {
+  const CreateNewTripPage({super.key});
+
   @override
   _CreateNewTripPageState createState() => _CreateNewTripPageState();
 }
@@ -11,7 +13,7 @@ class _CreateNewTripPageState extends State<CreateNewTripPage> {
   final TextEditingController _destinationController = TextEditingController();
   DateTime? _startDate;
   DateTime? _endDate;
-  List<String> _selectedCoTravelers = [];
+  final List<String> _selectedCoTravelers = [];
   List<String> availableCoTravelers = ['Alice', 'Bob', 'Charlie', 'David']; // Sample data
 
   @override
@@ -84,7 +86,7 @@ class _CreateNewTripPageState extends State<CreateNewTripPage> {
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 15.0),
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           border: Border(bottom: BorderSide(color: Colors.grey)),
                         ),
                         child: Text(
@@ -114,7 +116,7 @@ class _CreateNewTripPageState extends State<CreateNewTripPage> {
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 15.0),
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           border: Border(bottom: BorderSide(color: Colors.grey)),
                         ),
                         child: Text(
