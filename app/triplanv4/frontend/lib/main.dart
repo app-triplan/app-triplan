@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'login_page.dart';
 import 'itinerary_screen.dart';
 import 'trip_card.dart';
 import 'documents.dart';
@@ -24,13 +25,15 @@ class TriplanApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomeScreen(),
+      home: LoginPage(), // Starting with LoginPage
     );
   }
 }
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final String token;
+
+  const HomeScreen({super.key, required this.token});
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -48,18 +51,18 @@ class _HomeScreenState extends State<HomeScreen> {
     'Expenses'
   ];
 
-  final List<Widget> _screens = [];
+  late List<Widget> _screens;
 
   @override
   void initState() {
     super.initState();
-    _screens.addAll([
+    _screens = [
       HomeScreenContent(onNavigateToItinerary: _onNavigateToItinerary),
       ItineraryScreen(showAllTrips: true, initialFilter: _currentFilter),
       const DocumentsScreen(),
       ContactsScreen(),
-      ExpensesScreen()
-    ]);
+      ExpensesPage(token: widget.token),  // Pass the token to ExpensesPage
+    ];
   }
 
   void _onItemTapped(int index) {
@@ -77,63 +80,64 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _showInfo(BuildContext context) {
-  String infoContent;
-  switch (_selectedIndex) {
-    case 0: // Dashboard
-      infoContent = '''
+    String infoContent;
+    switch (_selectedIndex) {
+      case 0:
+        infoContent = '''
 Navigate upcoming and past trips.
 Use the "View All" button to see more trips.
-      ''';
-      break;
-    case 1: // Itineraries
-      infoContent = '''
+        ''';
+        break;
+      case 1:
+        infoContent = '''
 Add a new trip using the + icon.
 Toggle between upcoming and past trips.
 Select Tokyo trip and add activities to create an itinerary.
-      ''';
-      break;
-    case 2: // Documents
-      infoContent = '''
+        ''';
+        break;
+      case 2:
+        infoContent = '''
 Upload new documents using the + icon.
 Organize and manage your travel documents efficiently.
-      ''';
-      break;
-    case 3: // Contacts
-      infoContent = '''
+        ''';
+        break;
+      case 3:
+        infoContent = '''
 Add emergency contacts using the + icon.
 Click on 📍 to share your location.
 View and manage your contact list.
-      ''';
-      break;
-    case 4: // Expenses
-      infoContent = '''
+        ''';
+        break;
+      case 4:
+        infoContent = '''
 Add new expenses using the + icon.
 Select trip to view filtered expenses.
 Monitor your total expense and budget progress.
-      ''';
-      break;
-    default:
-      infoContent = '';
+        ''';
+        break;
+      default:
+        infoContent = '';
+    }
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('${_screenTitles[_selectedIndex]} - Info'),
+          content: Text(infoContent),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('${_screenTitles[_selectedIndex]} - Info'),
-        content: Text(infoContent),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text('Close'),
-          ),
-        ],
-      );
-    },
-  );
-}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -177,36 +181,6 @@ Monitor your total expense and budget progress.
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => AddContactPage()),
-                );
-              },
-            ),
-          if (_selectedIndex == 4)
-            IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: () {
-                showModalBottomSheet(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Text(
-                            'Add New Expense',
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                          // Add form fields here for new expense
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Text('Add Expense'),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
                 );
               },
             ),

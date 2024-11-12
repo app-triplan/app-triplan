@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 
 class ContactsScreen extends StatelessWidget {
-  final List<Map<String, String>> contacts = [
+  const ContactsScreen({super.key});
+
+  final List<Map<String, String>> contacts = const [
     {'name': 'Mom', 'phone': '+1 (555) 123-4567'},
     {'name': 'Dad', 'phone': '+1 (555) 234-5678'},
     {'name': 'Bro', 'phone': '+1 (555) 345-6789'},
     {'name': 'Bob the Friend', 'phone': '+1 (555) 456-7890'},
   ];
 
-  const ContactsScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Contacts'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

@@ -1,137 +1,156 @@
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart'; // Make sure you have this package in your pubspec.yaml
+import 'api_service.dart';
+import 'package:intl/intl.dart';
 
-class ExpensesScreen extends StatefulWidget {
-  const ExpensesScreen({super.key});
+class ExpensesPage extends StatefulWidget {
+  final String token;
+
+  ExpensesPage({required this.token});
 
   @override
-  _ExpensesScreenState createState() => _ExpensesScreenState();
+  _ExpensesPageState createState() => _ExpensesPageState();
 }
 
-class _ExpensesScreenState extends State<ExpensesScreen> {
-  String selectedTrip = 'Vietnam Trip'; // Default selected trip
-
-  final Map<String, List<Map<String, dynamic>>> tripExpenses = {
-    'Vietnam Trip': [
-      {'name': 'Hotel Stay', 'category': 'Accommodation', 'date': 'Sep 1, 2024', 'amount': 150.00},
-      {'name': 'Flight Ticket', 'category': 'Transport', 'date': 'Aug 31, 2024', 'amount': 300.00},
-      {'name': 'Museum Entry', 'category': 'Activities', 'date': 'Sep 2, 2024', 'amount': 20.00},
-      {'name': 'Dinner', 'category': 'Meals', 'date': 'Sep 1, 2024', 'amount': 45.00},
-      {'name': 'City Tour', 'category': 'Activities', 'date': 'Sep 3, 2024', 'amount': 75.00},
-    ],
-    'Paris Trip': [
-      {'name': 'Hotel Stay', 'category': 'Accommodation', 'date': 'Dec 10, 2024', 'amount': 200.00},
-      {'name': 'Eiffel Tower Visit', 'category': 'Activities', 'date': 'Dec 11, 2024', 'amount': 30.00},
-      {'name': 'Dinner Cruise', 'category': 'Meals', 'date': 'Dec 13, 2024', 'amount': 100.00},
-    ],
-    'Tokyo Trip': [
-      {'name': 'Sushi Dinner', 'category': 'Meals', 'date': 'Feb 5, 2024', 'amount': 60.00},
-      {'name': 'Bullet Train', 'category': 'Transport', 'date': 'Feb 6, 2024', 'amount': 120.00},
-    ],
-  };
+class _ExpensesPageState extends State<ExpensesPage> {
+  final ApiService apiService = ApiService();
+  List<dynamic> expenses = [];
+  bool isLoading = true;
 
   @override
-  Widget build(BuildContext context) {
-    List<Map<String, dynamic>> expenses = tripExpenses[selectedTrip] ?? [];
-    double totalExpenses = expenses.fold(0, (sum, item) => sum + item['amount']);
-
-    return Scaffold(
-      //appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Dropdown for selecting a trip
-            DropdownButton<String>(
-              value: selectedTrip,
-              items: tripExpenses.keys.map((String trip) {
-                return DropdownMenuItem<String>(
-                  value: trip,
-                  child: Text(trip),
-                );
-              }).toList(),
-              onChanged: (String? newValue) {
-                setState(() {
-                  selectedTrip = newValue!;
-                });
-              },
-            ),
-            const SizedBox(height: 16),
-            // Overview with a budget progress bar
-            Card(
-              elevation: 4,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text('Total Expenses', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 8),
-                    Text('\$${totalExpenses.toStringAsFixed(2)}', style: const TextStyle(fontSize: 24, color: Colors.blue)),
-                    const SizedBox(height: 16),
-                    LinearProgressIndicator(
-                      value: (totalExpenses / 1000).clamp(0.0, 1.0),
-                      backgroundColor: Colors.grey[300],
-                      color: totalExpenses > 1000 ? Colors.red : Colors.blue,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            // List of expenses with a detailed view on tap
-            Expanded(
-              child: ListView.builder(
-                itemCount: expenses.length,
-                itemBuilder: (context, index) {
-                  final expense = expenses[index];
-                  return Card(
-                    margin: const EdgeInsets.symmetric(vertical: 8),
-                    child: ListTile(
-                      leading: const Icon(Icons.attach_money, color: Colors.green),
-                      title: Text(expense['name'], style: const TextStyle(fontWeight: FontWeight.bold)),
-                      subtitle: Text('${expense['category']} - ${expense['date']}'),
-                      trailing: Text('\$${expense['amount'].toStringAsFixed(2)}', style: const TextStyle(color: Colors.green)),
-                      onTap: () {
-                        _showExpenseDetails(context, expense);
-                      },
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+  void initState() {
+    super.initState();
+    fetchExpenses();
   }
 
-  void _showExpenseDetails(BuildContext context, Map<String, dynamic> expense) {
-    showDialog(
+  Future<void> fetchExpenses() async {
+    try {
+      final fetchedExpenses = await apiService.fetchExpenses(widget.token);
+      setState(() {
+        expenses = fetchedExpenses;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      print('Error: $e');
+    }
+  }
+
+  Future<void> _addExpense() async {
+    String title = '';
+    double? amount;
+    int itineraryId = 1; // Replace with appropriate itinerary ID
+    DateTime? selectedDate;
+
+    await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(expense['name']),
+          title: const Text('Add New Expense'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Category: ${expense['category']}'),
-              Text('Date: ${expense['date']}'),
-              Text('Amount: \$${expense['amount'].toStringAsFixed(2)}'),
+              TextField(
+                decoration: const InputDecoration(labelText: 'Title'),
+                onChanged: (value) {
+                  title = value;
+                },
+              ),
+              TextField(
+                decoration: const InputDecoration(labelText: 'Amount'),
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  amount = double.tryParse(value);
+                },
+              ),
+              SizedBox(height: 10),
+              Row(
+                children: [
+                  Text(
+                    selectedDate == null
+                        ? 'Select Date'
+                        : 'Date: ${DateFormat('yyyy-MM-dd').format(selectedDate!)}',
+                  ),
+                  Spacer(),
+                  ElevatedButton(
+                    onPressed: () async {
+                      DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime(2101),
+                      );
+                      if (pickedDate != null) {
+                        setState(() {
+                          selectedDate = pickedDate;
+                        });
+                      }
+                    },
+                    child: const Text('Pick Date'),
+                  ),
+                ],
+              ),
             ],
           ),
-          actions: <Widget>[
+          actions: [
             TextButton(
-              child: const Text('Close'),
-              onPressed: () {
-                Navigator.of(context).pop();
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () async {
+                if (title.isNotEmpty && amount != null && selectedDate != null) {
+                  Navigator.pop(context);
+                  try {
+                    await apiService.addExpense(
+                      widget.token,  // Pass the token here
+                      title,
+                      amount!,
+                      itineraryId,
+                      selectedDate!,
+                    );
+                    fetchExpenses(); // Refresh the expenses list after adding
+                  } catch (e) {
+                    print('Error adding expense: $e');
+                  }
+                } else {
+                  print("Please fill all fields.");
+                }
               },
+              child: const Text('Add'),
             ),
           ],
         );
       },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Expenses'),
+      ),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : expenses.isEmpty
+              ? const Center(child: Text('No expenses found.'))
+              : ListView.builder(
+                  itemCount: expenses.length,
+                  itemBuilder: (context, index) {
+                    final expense = expenses[index];
+                    return ListTile(
+                      title: Text(expense['title'] ?? 'No Title'),
+                      subtitle: Text('Amount: ${expense['amount']}'),
+                      trailing: Text(expense['date'] ?? 'No Date'),
+                    );
+                  },
+                ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _addExpense,
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

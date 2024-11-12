@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
+import 'login_page.dart';  // Import LoginPage
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
+
+  void _logout(BuildContext context) {
+    // This will navigate to the LoginPage and clear the navigation stack
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => LoginPage()),
+      (route) => false,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +60,7 @@ class ProfilePage extends StatelessWidget {
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue, // Change the color if needed
+                    backgroundColor: Colors.blue,
                   ),
                   onPressed: () {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -63,11 +73,7 @@ class ProfilePage extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red,
                   ),
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Logging out...')),
-                    );
-                  },
+                  onPressed: () => _logout(context),
                   child: const Text('Logout'),
                 ),
               ],
@@ -84,7 +90,6 @@ class ProfilePage extends StatelessWidget {
       subtitle: Text(userSince, style: TextStyle(color: Colors.grey[600])),
       trailing: Text('Trips: $tripCount', style: const TextStyle(fontWeight: FontWeight.bold)),
       onTap: () {
-        // Show a dialog or navigate to another screen with user details
         _showUserDetails(context, name, userSince, tripCount);
       },
     );
