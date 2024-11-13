@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'api_service.dart';
-import 'main.dart'; // Import main.dart to access HomeScreen
-import 'registration.dart'; // Import RegistrationPage
 
-class LoginPage extends StatefulWidget {
+class RegistrationPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _RegistrationPageState createState() => _RegistrationPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegistrationPageState extends State<RegistrationPage> {
   final ApiService apiService = ApiService();
   final TextEditingController usernameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isLoading = false;
 
-  Future<void> _login() async {
+  Future<void> _register() async {
     setState(() {
       isLoading = true;
     });
 
-    final token = await apiService.login(
+    final success = await apiService.register(
       usernameController.text,
+      emailController.text,
       passwordController.text,
     );
 
@@ -28,16 +28,14 @@ class _LoginPageState extends State<LoginPage> {
       isLoading = false;
     });
 
-    if (token != null) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => HomeScreen(token: token), // Navigate to HomeScreen
-        ),
+    if (success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Registration successful! Please log in.')),
       );
+      Navigator.pop(context); // Navigate back to login page
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Login failed. Please check your credentials.')),
+        const SnackBar(content: Text('Registration failed. Please try again.')),
       );
     }
   }
@@ -45,33 +43,26 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Welcome to Triplan')),
+      appBar: AppBar(title: const Text('Register')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/favicon.png',
-              width: 100,
-              height: 100,
-            ),
-            const SizedBox(height: 20),
             const Text(
-              'Welcome to Triplan',
+              'Create an Account',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 10),
-            const Text(
-              'Please log in to access your travel plans',
-              style: TextStyle(fontSize: 16, color: Colors.grey),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 30),
             TextField(
               controller: usernameController,
               decoration: const InputDecoration(labelText: 'Username'),
+            ),
+            TextField(
+              controller: emailController,
+              decoration: const InputDecoration(labelText: 'Email'),
+              keyboardType: TextInputType.emailAddress,
             ),
             TextField(
               controller: passwordController,
@@ -82,18 +73,15 @@ class _LoginPageState extends State<LoginPage> {
             isLoading
                 ? const CircularProgressIndicator()
                 : ElevatedButton(
-                    onPressed: _login,
-                    child: const Text('Login'),
+                    onPressed: _register,
+                    child: const Text('Register'),
                   ),
             const SizedBox(height: 10),
             TextButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RegistrationPage()),
-                );
+                Navigator.pop(context); // Navigate back to login page
               },
-              child: const Text('Don’t have an account? Register here.'),
+              child: const Text('Already have an account? Log in here.'),
             ),
           ],
         ),

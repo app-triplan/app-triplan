@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ItineraryScreen(showAllTrips: true, initialFilter: _currentFilter),
       const DocumentsScreen(),
       ContactsScreen(),
-      ExpensesPage(token: widget.token),  // Pass the token to ExpensesPage
+      ExpensesPage(token: widget.token), // Pass the token to ExpensesPage
     ];
   }
 

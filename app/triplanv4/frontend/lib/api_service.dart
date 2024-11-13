@@ -26,6 +26,29 @@ class ApiService {
     }
   }
 
+  Future<bool> register(String username, String email, String password) async {
+    final url = Uri.parse('$baseUrl/register/'); // Update endpoint if needed
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        'username': username,
+        'email': email,
+        'password': password,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      return true; // Registration successful
+    } else {
+      print('Failed to register. Status code: ${response.statusCode}');
+      print('Response body: ${response.body}');
+      throw Exception('Failed to register');
+    }
+  }
+
   Future<List<dynamic>> fetchExpenses(String token) async {
     final url = Uri.parse('$baseUrl/expenses/');
     final response = await http.get(

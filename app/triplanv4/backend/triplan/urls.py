@@ -4,6 +4,7 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from itineraries.views import home  # Importing the home view directly
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
+from users.views import RegisterView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -16,6 +17,8 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # Get tokens
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # Refresh token
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),  # Verify token
+    path('api/register/', RegisterView.as_view(), name='register'),  # Add this line
+
 ]
 
 if settings.DEBUG:
