@@ -18,6 +18,7 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # Refresh token
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),  # Verify token
     path('api/register/', RegisterView.as_view(), name='register'),  # Add this line
+    path('api/', include('users.urls')),  # Ensure 'users.urls' is included here
 
 ]
 

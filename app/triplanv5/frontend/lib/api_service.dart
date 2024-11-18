@@ -26,6 +26,24 @@ class ApiService {
     }
   }
 
+  Future<bool> resetPassword(String email) async {
+    final url = Uri.parse('$baseUrl/password-reset/');
+    final response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({'email': email}),
+    );
+
+    if (response.statusCode == 200) {
+      return true; // Password reset request was successful
+    } else {
+      print('Failed to send password reset email: ${response.body}');
+      return false; // Password reset request failed
+    }
+  }
+
   Future<bool> register(String username, String email, String password) async {
     final url = Uri.parse('$baseUrl/register/'); // Update endpoint if needed
     final response = await http.post(

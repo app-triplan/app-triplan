@@ -10,6 +10,7 @@ import 'paris_trip_details_page.dart';
 import 'upload_document_page.dart';
 import 'add_contact.dart';
 import 'expenses_page.dart';
+import 'reset_password_page.dart'; // Import the reset password page
 
 void main() {
   runApp(const TriplanApp());

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'api_service.dart';
 import 'main.dart'; // Import main.dart to access HomeScreen
 import 'registration.dart'; // Import RegistrationPage
+import 'reset_password_page.dart'; // Import ResetPasswordPage
 
 class LoginPage extends StatefulWidget {
   @override
@@ -93,7 +94,17 @@ class _LoginPageState extends State<LoginPage> {
                   MaterialPageRoute(builder: (context) => RegistrationPage()),
                 );
               },
-              child: const Text('Don’t have an account? Register here.'),
+              child: const Text("Don't have an account? Register here."),
+            ),
+            const SizedBox(height: 10),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ResetPasswordPage()),
+                );
+              },
+              child: const Text('Forgot Password? Reset here.'),
             ),
           ],
         ),
